@@ -17,6 +17,7 @@ public class App {
 
 	public static void main(String[] args) throws Exception {
 		ExecutionEnvironment env = ExecutionEnvironment.getExecutionEnvironment();
+		env.setParallelism(ParameterTool.fromArgs(args).getInt("parallelism", 1));
 		DataSet<String> input = env.readTextFile(
 				ParameterTool.fromArgs(args).get("input", "src/main/resources/myInput.txt"));
 		input.map(new InputMapper()).print();
