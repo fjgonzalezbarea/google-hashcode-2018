@@ -19,6 +19,8 @@ public class Ride {
 	
 	int finishPositionY;
 
+	int timeTaken;
+
 	public int distance() {
 		return Math.abs(finishPositionX - startPositionX) + Math.abs(finishPositionY - startPositionY);
 	}

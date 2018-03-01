@@ -9,15 +9,17 @@ public class Car {
     List<Ride> ridesTaken;
 
     public int score() {
-        ridesTaken.stream()
+        return ridesTaken.stream()
             .map(ride -> ride.distance() + bonus(ride))
-            .reduce((a, b) -> a+b);
-        return 0;
+            .reduce((a, b) -> a+b)
+            .orElse(0);
     }
 
-    private int bonus(Ride ride, int iteration) {
-        if(ride.startTime >= iteration) {
-            return ride.finishTime - ride.distance();
+    private int bonus(Ride ride) {
+        if(ride.startTime == ride.timeTaken) {
+            return ride.finishTime - (ride.startTime + ride.distance() + 1);
+        } else if (ride.startTime > ride.timeTaken) {
+            throw new IllegalStateException("Car should wait for start time of the ride");
         }
         return 0;
     }
