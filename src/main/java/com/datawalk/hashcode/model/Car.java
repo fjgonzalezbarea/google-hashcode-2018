@@ -1,5 +1,6 @@
 package com.datawalk.hashcode.model;
 
+import java.util.LinkedList;
 import java.util.List;
 import lombok.Value;
 
@@ -7,6 +8,11 @@ import lombok.Value;
 public class Car {
     Long id;
     List<Ride> ridesTaken;
+
+    public Car(Long id) {
+        this.id = id;
+        ridesTaken = new LinkedList<>();
+    }
 
     public int score() {
         return ridesTaken.stream()
