@@ -5,7 +5,11 @@ import org.apache.flink.api.java.ExecutionEnvironment;
 import org.apache.flink.api.java.utils.ParameterTool;
 
 import com.datawalk.hashcode.algorithm.Algorithm;
+import com.datawalk.hashcode.mappers.InputMapper;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class App {
 
 	private static final String INPUTS_LOCATION = "";
@@ -15,7 +19,7 @@ public class App {
 		ExecutionEnvironment env = ExecutionEnvironment.getExecutionEnvironment();
 		DataSet<String> input = env.readTextFile(
 				ParameterTool.fromArgs(args).get("input", "src/main/resources/myInput.txt"));
-		input.print();
+		input.map(new InputMapper()).print();
 	}
 
 	/*
