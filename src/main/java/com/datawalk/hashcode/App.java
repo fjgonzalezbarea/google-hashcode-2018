@@ -1,23 +1,18 @@
 package com.datawalk.hashcode;
 
-import static com.datawalk.hashcode.algorithm.GSASingleSourceSample.gsaSample;
-
+import com.datawalk.hashcode.algorithm.Algorithm;
+import com.datawalk.hashcode.model.Car;
+import com.datawalk.hashcode.model.Problem;
+import com.datawalk.hashcode.model.Ride;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Collection;
-
 import org.apache.commons.lang3.tuple.Triple;
 import org.apache.flink.api.java.DataSet;
 import org.apache.flink.api.java.ExecutionEnvironment;
 import org.apache.flink.api.java.utils.ParameterTool;
 import org.apache.flink.shaded.guava18.com.google.common.collect.Lists;
-
-import com.datawalk.hashcode.algorithm.Algorithm;
-import com.datawalk.hashcode.mappers.InputMapper;
-import com.datawalk.hashcode.model.Car;
-import com.datawalk.hashcode.model.Problem;
-import com.datawalk.hashcode.model.Ride;
 
 public class App {
 

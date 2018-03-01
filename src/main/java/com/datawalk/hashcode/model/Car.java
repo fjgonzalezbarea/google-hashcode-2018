@@ -14,19 +14,10 @@ public class Car {
         ridesTaken = new LinkedList<>();
     }
 
-    public int score() {
+    public int score(int bonusValue) {
         return ridesTaken.stream()
-            .map(ride -> ride.distance() + bonus(ride))
+            .map(ride -> ride.distance() + bonusValue)
             .reduce((a, b) -> a+b)
             .orElse(0);
-    }
-
-    private int bonus(Ride ride) {
-        if(ride.startTime == ride.timeTaken) {
-            return ride.finishTime - (ride.startTime + ride.distance() + 1);
-        } else if (ride.startTime > ride.timeTaken) {
-            throw new IllegalStateException("Car should wait for start time of the ride");
-        }
-        return 0;
     }
 }
