@@ -11,8 +11,12 @@ public class Ride {
 
 	int startTime;
 
-	int startPosition;
+	int startPositionX;
+	
+	int startPositionY;
 
-	int finishPosition;
+	int finishPositionX;
+	
+	int finishPositionY;
 
 }
