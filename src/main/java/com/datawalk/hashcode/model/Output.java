@@ -3,14 +3,9 @@ package com.datawalk.hashcode.model;
 import lombok.Builder;
 
 @Builder
-public class SolutionGlobalObject {
+public class Output {
 
     public void printSolutionToFile() {
         // TODO
     }
-
-    public void solveProblem() {
-        // TODO
-    }
-
 }
