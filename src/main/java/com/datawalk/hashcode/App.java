@@ -1,5 +1,6 @@
 package com.datawalk.hashcode;
 
+import com.datawalk.hashcode.algorithm.GSASingleSourceShortestPaths;
 import java.util.Arrays;
 import java.util.Collection;
 import org.apache.flink.api.java.DataSet;
@@ -33,13 +34,13 @@ public class App {
 		Vertex<Long, String> v3 = new Vertex<Long, String>(3L, "foo3");
 		Vertex<Long, String> v4 = new Vertex<Long, String>(4L, "foo4");
 
-		Collection vertexCollection = Arrays.asList(v1, v2, v2, v4);
+		Collection vertexCollection = Arrays.asList(v1, v2, v3, v4);
 
-		Edge<Long, Double> e1 = new Edge<Long, Double>(1L, 2L, 0.5);
-		Edge<Long, Double> e2 = new Edge<Long, Double>(1L, 3L, 0.5);
-		Edge<Long, Double> e3 = new Edge<Long, Double>(1L, 4L, 0.5);
-		Edge<Long, Double> e4 = new Edge<Long, Double>(2L, 3L, 0.5);
-		Edge<Long, Double> e5 = new Edge<Long, Double>(4L, 1L, 0.5);
+		Edge<Long, Double> e1 = new Edge<Long, Double>(1L, 2L, 0.1);
+		Edge<Long, Double> e2 = new Edge<Long, Double>(2L, 3L, 0.4);
+		Edge<Long, Double> e3 = new Edge<Long, Double>(3L, 4L, 2.5);
+		Edge<Long, Double> e4 = new Edge<Long, Double>(1L, 4L, 1.5);
+		Edge<Long, Double> e5 = new Edge<Long, Double>(4L, 1L, 0.2);
 
 		Collection edgeColleciton = Arrays.asList(e1, e2, e3, e4);
 
@@ -53,6 +54,10 @@ public class App {
 		log.info("Num of Vertex --> " + graph.numberOfVertices());
 		log.info("Out Degrees --> " + graph.outDegrees());
 		log.info("In Degrees --> " + graph.outDegrees());
+
+		GSASingleSourceShortestPaths algorithm = new GSASingleSourceShortestPaths(1L, 10);
+		DataSet<Vertex> result = algorithm.run(graph);
+		result.print();
 	}
 
 	/*
