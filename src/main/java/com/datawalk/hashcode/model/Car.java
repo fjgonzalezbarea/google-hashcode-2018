@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.tuple.Pair;
 
 @Data
 @Slf4j
@@ -57,6 +58,10 @@ public class Car {
 	        return Optional.empty();
         }
         return Optional.of(ridesTaken.get(ridesTaken.size()-1));
+    }
+
+    public Pair<Integer, Integer> getLastRideFinalCoordinates() {
+	    return getLastRide().map(ride -> Pair.of(ride.finishPositionX, ride.finishPositionY)).orElse(Pair.of(0,0));
     }
 
 	public int score(int bonus) {
