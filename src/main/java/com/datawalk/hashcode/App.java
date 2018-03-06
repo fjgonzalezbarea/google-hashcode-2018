@@ -22,7 +22,7 @@ import org.apache.flink.api.java.utils.ParameterTool;
 public class App {
 
     private static final String INPUTS_LOCATION = "src/main/resources/";
-    private static final String OUTPUTS_LOCATION = "src/main/resources/output-extended/";
+    private static final String OUTPUTS_LOCATION = "src/main/resources/output-extended2/";
     private static final String INPUT_A_NAME = "a_example";
     private static final String INPUT_B_NAME = "b_should_be_easy";
     private static final String INPUT_C_NAME = "c_no_hurry";

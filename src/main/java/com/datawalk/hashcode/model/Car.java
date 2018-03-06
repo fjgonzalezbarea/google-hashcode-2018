@@ -37,8 +37,8 @@ public class Car {
     }
 
 	public Long peso(Ride ride, int currentStep) {
-		int lastRideX = getLastRide().map(lastRide -> lastRide.getStartPositionX()).orElse(0);
-		int lastRideY = getLastRide().map(lastRide -> lastRide.getStartPositionY()).orElse(0);
+		int lastRideX = getLastRide().map(lastRide -> lastRide.getFinishPositionX()).orElse(0);
+		int lastRideY = getLastRide().map(lastRide -> lastRide.getFinishPositionY()).orElse(0);
 		int distanceLstRideToRide = ride.dinstanceFromOrigin(lastRideX, lastRideY);
 
 		return Long.valueOf(ride.getFinishTime() - (ride.distance() + distanceLstRideToRide + 1 + currentStep));

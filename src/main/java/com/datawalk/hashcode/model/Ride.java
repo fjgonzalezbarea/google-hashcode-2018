@@ -25,4 +25,7 @@ public class Ride {
 		return Math.abs(finishPositionX - startPositionX) + Math.abs(finishPositionY - startPositionY);
 	}
 
+	public int dinstanceFromOrigin(int finishPositionX, int finishPositionY) {
+		return Math.abs(this.finishPositionX - finishPositionX) + Math.abs(this.finishPositionY - finishPositionY);
+	}
 }
