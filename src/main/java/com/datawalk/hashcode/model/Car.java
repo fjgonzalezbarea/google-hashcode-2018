@@ -69,11 +69,7 @@ public class Car {
 
 	private int bonus(Ride ride, int bonus) {
 		if (ride.startTime == ride.timeTaken) {
-			//return ride.finishTime - (ride.startTime + ride.distance() + 1);
 			return bonus;
-		} else if (ride.startTime > ride.timeTaken) {
-			//System.out.println("Ride taken at " + ride.timeTaken + " and should be taken at " + ride.startTime + " for ride " + ride.getId());
-			//throw new IllegalStateException("Car should wait for start time of the ride");
 		}
 		return 0;
 	}
