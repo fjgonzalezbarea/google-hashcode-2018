@@ -41,7 +41,7 @@ public class Car {
 		int lastRideY = getLastRide().map(lastRide -> lastRide.getFinishPositionY()).orElse(0);
 		int distanceLstRideToRide = ride.dinstanceFromOrigin(lastRideX, lastRideY);
 
-		return Long.valueOf(ride.getFinishTime() - (ride.distance() + distanceLstRideToRide + 1 + currentStep));
+		return Long.valueOf(ride.startTime - (distanceLstRideToRide + currentStep));
 	}
 
     public int distanceToRide(int currentStep, Ride ride) {
