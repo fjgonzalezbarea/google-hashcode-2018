@@ -113,7 +113,7 @@ public class App {
         return (r1, r2) -> {
             Long p1 = car.peso(r1, step);
             Long p2 = car.peso(r2, step);
-            return p1.compareTo(p2);
+            return -p1.compareTo(p2);
         };
     }
 
