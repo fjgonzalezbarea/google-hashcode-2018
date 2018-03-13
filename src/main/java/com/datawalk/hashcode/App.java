@@ -13,6 +13,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
 import org.apache.commons.lang3.tuple.Triple;
@@ -40,12 +41,22 @@ public class App {
         env.setParallelism(ParameterTool.fromArgs(args).getInt("parallelism", 1));
         String filePath = ParameterTool.fromArgs(args)
             .get("input", "src/main/resources/a_example.in");
-        runProgram(INPUTS_LOCATION + INPUT_A_NAME + INPUT, OUTPUTS_LOCATION + INPUT_A_NAME + OUTPUT);
-        runProgram(INPUTS_LOCATION + INPUT_B_NAME + INPUT, OUTPUTS_LOCATION + INPUT_B_NAME + OUTPUT);
-        runProgram(INPUTS_LOCATION + INPUT_C_NAME + INPUT, OUTPUTS_LOCATION + INPUT_C_NAME + OUTPUT);
-        runProgram(INPUTS_LOCATION + INPUT_D_NAME + INPUT, OUTPUTS_LOCATION + INPUT_D_NAME + OUTPUT);
-        runProgram(INPUTS_LOCATION + INPUT_E_NAME + INPUT, OUTPUTS_LOCATION + INPUT_E_NAME + OUTPUT);
+        runProgram(INPUTS_LOCATION + INPUT_A_NAME + INPUT,
+            OUTPUTS_LOCATION + INPUT_A_NAME + OUTPUT);
+        runProgram(INPUTS_LOCATION + INPUT_B_NAME + INPUT,
+            OUTPUTS_LOCATION + INPUT_B_NAME + OUTPUT);
+        runProgram(INPUTS_LOCATION + INPUT_C_NAME + INPUT,
+            OUTPUTS_LOCATION + INPUT_C_NAME + OUTPUT);
+        runProgram(INPUTS_LOCATION + INPUT_D_NAME + INPUT,
+            OUTPUTS_LOCATION + INPUT_D_NAME + OUTPUT);
+        runProgram(INPUTS_LOCATION + INPUT_E_NAME + INPUT,
+            OUTPUTS_LOCATION + INPUT_E_NAME + OUTPUT);
     }
+
+    public static int score(Collection<Car> cars, int bonus) {
+        return cars.stream().mapToInt(car -> car.score(bonus)).sum();
+    }
+
 
     private static void runProgram(String inputFile, String outputFilñe)
         throws IllegalInputException, FileNotFoundException {
@@ -55,18 +66,21 @@ public class App {
         Collection<Ride> rides = triple.getRight();
         createSolution(cars, rides, problem.getSteps());
         /*for (int step = 0; step < problem.getSteps(); step++) {
-			processCars(triple, step);
+            processCars(triple, step);
 		}*/
         //System.out.println(cars);
         generateOutput(cars, outputFilñe);
         System.out.println("Total score --> " + score(cars, problem.getBonus()));
     }
 
-    private static void createSolution(Collection<Car> cars, Collection<Ride> rides, Integer numnberOfSteps) {
-        IntStream.range(0, numnberOfSteps).forEach(step -> createSolutionForStep(cars, rides, step));
+    private static void createSolution(Collection<Car> cars, Collection<Ride> rides,
+        Integer numnberOfSteps) {
+        IntStream.range(0, numnberOfSteps)
+            .forEach(step -> createSolutionForStep(cars, rides, step));
     }
 
-    private static void createSolutionForStep(Collection<Car> cars, Collection<Ride> rides, Integer step) {
+    private static void createSolutionForStep(Collection<Car> cars, Collection<Ride> rides,
+        Integer step) {
         cars.forEach(car -> createSolutionForCar(car, rides, step));
     }
 
@@ -81,32 +95,18 @@ public class App {
     }
 
     private static void setNextRideToCar(Car car, Collection<Ride> rides, Integer step) {
-        Ride ride = rides.iterator().next();
+        Optional<Ride> optRide = findRideWithBonus(car, rides, step);
+        Ride ride = optRide.orElse(rides.iterator().next());
         ride.setTimeTaken(step);
         car.takeRide(step, ride);
         rides.remove(ride);
     }
 
-    private static void processCar(Triple<Problem, Collection<Car>, Collection<Ride>> triple,
-        int step, Car car) {
-        if (car.isAvailable(step)) {
-            AtomicInteger step1 = new AtomicInteger(step);
-            Collections.sort((List<Ride>) triple.getRight(), (r1, r2) -> {
-                Long p1 = car.peso(r1, step1.get());
-                Long p2 = car.peso(r2, step1.get());
-                return p1.compareTo(p2);
-            });
-            if (!triple.getRight().isEmpty()) {
-                Ride ride = triple.getRight().iterator().next();
-                ride.setTimeTaken(step);
-                car.takeRide(step, ride);
-                triple.getRight().remove(ride);
-            }
-        }
-    }
-
-    public static int score(Collection<Car> cars, int bonus) {
-        return cars.stream().mapToInt(car -> car.score(bonus)).sum();
+    private static Optional<Ride> findRideWithBonus(Car car, Collection<Ride> rides, Integer step) {
+        return rides.stream()
+            .filter(ride -> ride.dinstanceFromOrigin(car.getLastRideFinalCoordinates().getLeft(),
+                car.getLastRideFinalCoordinates().getRight()) + step == ride.getStartTime())
+            .findAny();
     }
 
     private static Comparator<Ride> createRideComparator(Car car, Integer step) {

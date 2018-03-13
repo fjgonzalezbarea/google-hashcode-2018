@@ -23,7 +23,7 @@ public class Car {
 
 	public void takeRide(int currentStep, Ride ride) {
 	    if(ridesTaken.isEmpty()) {
-	        stepToBeFree = currentStep + Math.abs(ride.startPositionX - ride.startPositionY) + ride.distance() + 1;
+	        stepToBeFree = currentStep + ride.dinstanceFromOrigin(0,0) + ride.distance() + 1;
         } else {
             Ride lastRide = ridesTaken.get(ridesTaken.size() - 1);
             stepToBeFree = currentStep + ride
